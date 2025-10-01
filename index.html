@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Coin Clicker</title>
+  <style>
+    body {
+      text-align: center;
+      background: #222;
+      color: #fff;
+      font-family: Arial, sans-serif;
+      margin-top: 50px;
+    }
+    #coin {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      background: gold;
+      border: 5px solid #d4af37;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      font-weight: bold;
+      margin: 20px auto;
+      cursor: pointer;
+      box-shadow: 0 0 20px rgba(255,215,0,0.8);
+      transition: transform 0.1s;
+    }
+    #coin:active {
+      transform: scale(0.9);
+    }
+    #score {
+      font-size: 2rem;
+      margin: 20px;
+    }
+    #upgrade {
+      margin-top: 20px;
+      padding: 10px 20px;
+      background: #444;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+    #upgrade:disabled {
+      background: #333;
+      color: #777;
+      cursor: not-allowed;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>💰 Coin Clicker 💰</h1>
+  <div id="coin">🪙</div>
+  <div id="score">Coins: 0</div>
+  <button id="upgrade" disabled>Upgrade (Cost: 10)</button>
+
+  <script>
+    let score = 0;
+    let coinsPerClick = 1;
+    let upgradeCost = 10;
+
+    const coin = document.getElementById("coin");
+    const scoreDisplay = document.getElementById("score");
+    const upgradeBtn = document.getElementById("upgrade");
+
+    function updateScore() {
+      scoreDisplay.textContent = `Coins: ${score}`;
+      upgradeBtn.disabled = score < upgradeCost;
+    }
+
+    coin.addEventListener("click", () => {
+      score += coinsPerClick;
+      updateScore();
+    });
+
+    upgradeBtn.addEventListener("click", () => {
+      if (score >= upgradeCost) {
+        score -= upgradeCost;
+        coinsPerClick++;
+        upgradeCost *= 2; // price doubles each upgrade
+        upgradeBtn.textContent = `Upgrade (Cost: ${upgradeCost})`;
+        updateScore();
+      }
+    });
+
+    updateScore();
+  </script>
+
+</body>
+</html>
